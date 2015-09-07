@@ -37,6 +37,11 @@ class User
     {
         $this->portfolios = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    public function __toString()
+    {
+      return $this->getUsername();
+    }
 
     /**
      * Get id

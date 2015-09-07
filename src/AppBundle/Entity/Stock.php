@@ -34,7 +34,10 @@ class Stock
     {
         return $this->id;
     }
-
+    public function __toString()
+    {
+      return $this->getTicker();
+    }
     /**
      * Set ticker
      *

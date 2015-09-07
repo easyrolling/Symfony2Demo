@@ -3,6 +3,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Colletions;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @ORM\Entity
  */
@@ -47,7 +49,11 @@ class Portfolio
     {
         return $this->id;
     }
-
+    
+    public function __toString()
+    {
+      return $this->getName();
+    }
     /**
      * Set name
      *
