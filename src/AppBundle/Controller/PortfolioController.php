@@ -12,7 +12,6 @@ use AppBundle\Form\PortfolioType;
 
 /**
  * Portfolio controller.
- *
  * @Route("/portfolio")
  */
 class PortfolioController extends Controller

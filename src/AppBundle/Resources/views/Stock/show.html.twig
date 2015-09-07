@@ -17,8 +17,16 @@
                 <th>Name</th>
                 <td>{{ entity.name }}</td>
             </tr>
+            <tr>
+                <th>LastPrice</th>
+                <td>{{ entity.lastprice }}</td>
+            </tr>
         </tbody>
     </table>
+
+    <pre>
+      {{ entity.historicaldata }}
+    </pre>
 
         <ul class="record_actions">
     <li>

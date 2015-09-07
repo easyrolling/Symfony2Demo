@@ -2,11 +2,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  */
-class User
+class User implements UserInterface, \Serializable
 {
   /**
    * @ORM\Column(type="integer")
@@ -77,6 +77,16 @@ class User
     }
 
     /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    
+    /**
      * Set password
      *
      * @param string $password
@@ -87,16 +97,6 @@ class User
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -130,5 +130,32 @@ class User
     public function getPortfolios()
     {
         return $this->portfolios;
+    }
+
+    public function getRoles()
+    {
+      return array('ROLE_USER');
+    }
+    
+    public function getSalt()
+    {
+      return null;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function serialize()
+    {
+
+      return serialize(array($this->id, $this->username, $this->password));
+    }
+
+    public function unserialize($serialized)
+    {
+
+      list($this->id, $this->username, $this->password) = unserialize($serialized);
     }
 }

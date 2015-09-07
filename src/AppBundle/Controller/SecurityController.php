@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 
 class SecurityController extends Controller
 {
@@ -14,17 +16,30 @@ class SecurityController extends Controller
     {
       $authUtils = $this->get('security.authentication_utils');
       
-      $error = $authenticationUtils->getLastAuthenticationError();
+      $error = $authUtils->getLastAuthenticationError();
 
-      $lastUsername = $authenticationUtils->getLastUsername();
+      $lastUsername = $authUtils->getLastUsername();
 
       return $this->render(
-        'security/login.html.php',
+        'security/login.html.twig',
         array(
           'last_username' => $lastUsername,
           'error' => $error,
         )
       ); 
+    }
+    /**
+     * @Route("/register", name="register")
+     */
+    public function registerAction()
+    {
+      $user = new User();
+      $form = $this->createForm(new UserType(), $user, array('action' => $this->generateUrl('user_create')));
+      $form->add('submit', 'submit', array('label' => 'Register')); 
+      return $this->render(
+        'security/register.html.twig',
+        array('form' => $form->createView())
+      );
     }
 
     /**
