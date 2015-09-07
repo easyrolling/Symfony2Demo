@@ -22,11 +22,9 @@ class Stock
 
 	
 	/**
-     * @ORM\Column(type="string")
-     */
-	protected $name;
-
-
+     	 * @ORM\Column(type="string")
+     	 */
+	protected $name;	
     /**
      * Get id
      *
