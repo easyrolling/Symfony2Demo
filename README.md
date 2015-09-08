@@ -12,7 +12,7 @@ git clone https://github.com/ppashin/Symfony2Demo.git
 cd demo
 composer update
 ```
-Configure your local apache installation with virtual host
+Follow instructions on how to launch a symfony2 project here: http://symfony.com/doc/current/book/installation.html
 
 Time Spent
 ========================
