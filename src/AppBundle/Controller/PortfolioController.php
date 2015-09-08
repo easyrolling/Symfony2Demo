@@ -9,7 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Portfolio;
 use AppBundle\Form\PortfolioType;
-
+use AppBundle\Utils\ChartUtil;
+use Ob\HighchartsBundle\Highcharts\Highchart;
 /**
  * Portfolio controller.
  * @Route("/portfolio")
@@ -116,10 +117,23 @@ class PortfolioController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
+        
+        //HighCharts
+        $series = array(array("name" => "Historical Cost", "data" => ChartUtil::getChartData($entity->getHistoricalData())));
+
+        $ob = new Highchart();
+        $ob->chart->renderTo('linechart');
+        $ob->title->text('Historical Cost');
+        $ob->xAxis->title(array('text' => "Time"));
+        $ob->xAxis->type('datetime');
+        //$ob->xAxis->format('%m/%d/%y');
+        $ob->yAxis->title(array('text' => "Cost"));
+        $ob->series($series);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'chart' => $ob
         );
     }
 

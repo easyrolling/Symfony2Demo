@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Stock;
 use AppBundle\Form\StockType;
+use AppBundle\Utils\ChartUtil;
+use Ob\HighchartsBundle\Highcharts\Highchart;
 
 /**
  * Stock controller.
@@ -117,10 +119,23 @@ class StockController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-
+        
+        //HighCharts
+        $series = array(array("name" => "Historical Prices", "data" => ChartUtil::getChartData($entity->getHistoricalData())));
+        
+        $ob = new Highchart();
+        $ob->chart->renderTo('linechart');
+        $ob->title->text('Historical Prices');
+        $ob->xAxis->title(array('text' => "Time"));
+        $ob->xAxis->type('datetime');
+        //$ob->xAxis->format('%m/%d/%y');
+        $ob->yAxis->title(array('text' => "Price"));
+        $ob->series($series);
+       
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'chart' => $ob
         );
     }
 

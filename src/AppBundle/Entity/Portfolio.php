@@ -32,12 +32,14 @@ class Portfolio
    */
   protected $portfolio_stocks;
 
+  //protected $historical_data;
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->portfolio_stocks = new ArrayCollection();
+        //$this->historical_data = array();
     }
 
     /**
@@ -131,5 +133,55 @@ class Portfolio
     public function getPortfolioStocks()
     {
         return $this->portfolio_stocks;
+    }
+
+    public function getPortfolioBreakdown()
+    {
+      $string = array();
+       foreach($this->portfolio_stocks as $stock)
+       {
+        $string[$stock->getStock()->getTicker()] = $stock->getShares(); 
+       }
+      return $string;    
+    }
+
+    public function getTodaysCost()
+    {
+      $cost = 0;
+      foreach($this->portfolio_stocks as $stock)
+      {
+        $cost += ($stock->getStock()->getLastPrice() * $stock->getShares());
+        
+      }
+      return $cost;
+    }
+
+    public static function calculateCost(&$price, $key, $shares)
+    {
+      $price = $price * $shares;
+    }
+
+    public static function addToPortfolio(&$cost, $key, $pdata)
+    {
+      if(array_key_exists($key, $pdata))
+      {
+        $cost = $cost + $pdata[$key];
+      }
+    }
+
+    public function getHistoricalData()
+    {
+      $pdata = array();
+      foreach($this->portfolio_stocks as $stock)
+      {
+        //sleep(1);
+        $data = $stock->getStock()->getHistoricalData();
+        array_walk($data, 'self::calculateCost', $stock->getShares());
+        array_walk($data, 'self::addToPortfolio', $pdata);
+
+        $pdata = $data;
+      }
+   
+      return $pdata;
     }
 }

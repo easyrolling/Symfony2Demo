@@ -15,7 +15,6 @@ class PortfolioStockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('createdAt')
             ->add('shares')
             ->add('stock')
             ->add('portfolio')

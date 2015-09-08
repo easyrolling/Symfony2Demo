@@ -103,11 +103,26 @@ class Stock
 
     public function getHistoricalData()
     {
+      $quotes = array();
       $client = new \Scheb\YahooFinanceApi\ApiClient();
-      $end_date = new \DateTime();
-      $start_date = new \DateTime("-2 days");
-      //echo $end_date->format("Y-m-d");
-      //$hist_data = $client->getHistoricalData($this->ticker, $start_date, $end_date);
-      //print_r($hist_data);
+      try
+      {
+        sleep(0.8);
+        $hist_data1 = $client->getHistoricalData($this->ticker, new \DateTime("-1 year"), new \DateTime("-1 day"));
+        sleep(0.8);
+        $hist_data2 = $client->getHistoricalData($this->ticker, new \DateTime("-2 years"), new \DateTime("-1 year"));
+        $data1 = $hist_data1['query']['results']['quote'];
+        $data2 = $hist_data2['query']['results']['quote'];
+        $data = array_merge($data1, $data2);
+        foreach($data as $datum)
+        { 
+          $quotes[strtotime($datum['Date'])*1000] = round($datum['Close'], 2);
+        }
+      }
+      catch(Exception $e)
+      {
+        echo $e->getMessage();
+      }
+      return $quotes;
     } 
 }

@@ -13,9 +13,20 @@
                 <th>Name</th>
                 <td>{{ entity.name }}</td>
             </tr>
+            <tr>
+                <th>Breakdown</th>
+                <td>{{ dump(entity.portfolioBreakdown) }}</td>
+            </tr>
+            <tr>
+                <th>Today's Cost</th>
+                <td>{{ entity.todaysCost }}</td>
+            </tr>
         </tbody>
     </table>
-
+    <script type="text/javascript">
+        {{ chart(chart) }}
+    </script>
+    <div id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
         <ul class="record_actions">
     <li>
         <a href="{{ path('portfolio') }}">

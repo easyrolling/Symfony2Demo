@@ -26,12 +26,6 @@ class PortfolioStock
   protected $portfolio;
 
   /**
-   * @ORM\Column(type="datetime")
-   */
-  protected $createdAt;
-
-
-  /**
    * @ORM\Column(type="integer")
    */
   protected $shares;
@@ -91,29 +85,6 @@ class PortfolioStock
     public function getPortfolio()
     {
         return $this->portfolio;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return PortfolioStock
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
     }
 
     /**
