@@ -1,5 +1,7 @@
-Symfony Standard Edition
+Symfony2Demo
 ========================
+
+Check out the demo here: http://demo.waleup.com and follow the steps
 
 Welcome to the Symfony Standard Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.

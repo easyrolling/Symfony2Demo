@@ -34,7 +34,7 @@ class SecurityController extends Controller
     public function registerAction()
     {
       $user = new User();
-      $form = $this->createForm(new UserType(), $user, array('action' => $this->generateUrl('user_create')));
+      $form = $this->createForm(new UserType(), $user, array('action' => $this->generateUrl('registeruser')));
       $form->add('submit', 'submit', array('label' => 'Register')); 
       return $this->render(
         'security/register.html.twig',
@@ -48,5 +48,37 @@ class SecurityController extends Controller
     public function loginCheckAction()
     {
     
+    }
+    
+    /**
+     * @Route("/registeruser", name="registeruser")
+     */
+    public function registeruserAction(Request $request)
+    {
+        $entity = new User();
+        $form = $this->createForm(new UserType(), $entity, array('action' => $this->generateUrl('registeruser')));
+        $form->add('submit', 'submit', array('label' => 'Register'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($entity, $entity->getPassword());
+            $entity->setPassword($encoded);
+
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirectToRoute("homepage");
+        }
+
+        return $this->render(
+          'security/register.html.twig',
+          array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+          )
+        );
     }
 }

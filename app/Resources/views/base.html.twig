@@ -10,6 +10,7 @@
         <script src="http://code.highcharts.com/4.1.8/modules/exporting.js"></script>
     </head>
     <body>
+        <a href="{{ path('homepage') }}">Home</a> | <a href="{{ path('stock') }}">Stocks</a> | <a href="{{ path('portfolio') }}">Portfolio</a> | <a href="{{ path('portfoliostock') }}">Manage Portfolio</a>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

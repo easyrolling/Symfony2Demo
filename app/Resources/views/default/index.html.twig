@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    Homepage.
+    <h1>Welcome to Symfony2Demo</h1>
+    <a href="{{ path('register') }}">Register here</a><br/>
+    then check out:<br/>
+    <a href="{{ path('stock') }}">Stocks</a><br/>
+    <a href="{{ path('portfolio') }}">Portfolios</a><br/>
+    <a href="{{ path('portfoliostock') }}">Portfolio Managment</a><br/>
+    Then <a href="{{ path('logout') }}">Logout</a>
 {% endblock %}
